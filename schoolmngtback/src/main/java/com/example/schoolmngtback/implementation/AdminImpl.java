@@ -51,7 +51,7 @@ public class AdminImpl implements AllServices<Administrator> {
         administratorRepo.deleteById(id);
     }
 
-    public Administrator getAdminByUsername(String username){
+    public Optional<Administrator> getAdminByUsername(String username){
         return administratorRepo.findByUsername(username);
     }
 

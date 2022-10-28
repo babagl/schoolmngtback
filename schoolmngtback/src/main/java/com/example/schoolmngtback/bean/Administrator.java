@@ -27,17 +27,29 @@ public class Administrator {
     private LocalDate birthday;
 
     private String address;
+    private boolean active;
 
     @Enumerated(EnumType.STRING)
     private Roles roles;
-    @OneToMany(cascade = CascadeType.DETACH)
+
+    public Administrator(String fullName, String username, String email, String password, LocalDate birthday, String address, boolean active, Roles roles) {
+        this.fullName = fullName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.birthday = birthday;
+        this.address = address;
+        this.active = active;
+        this.roles = roles;
+    }
+    /*@OneToMany(cascade = CascadeType.DETACH)
     List<Instructor> instructors;
     @OneToMany(cascade = CascadeType.DETACH)
     List<TimeTable> timeTables;
     @OneToMany(cascade = CascadeType.DETACH)
     List<Students> students;
     @OneToMany(cascade = CascadeType.DETACH)
-    List<Staff> staff;
+    List<Staff> staff;*/
 
     public Administrator() {
     }

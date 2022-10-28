@@ -57,7 +57,7 @@ public class AdminController {
 
 
     @GetMapping("/username/{username}")
-    public Administrator getAdminByUsername(@PathVariable String username){
+    public Optional<Administrator> getAdminByUsername(@PathVariable String username){
         return services.getAdminByUsername(username);
     }
 }

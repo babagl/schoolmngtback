@@ -11,7 +11,6 @@ import java.util.List;
 @Data
 public class TimeTable {
     @Id
-//    @Column(name = "idTimeTable")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long idTimeTable;
     @Column(unique = true)

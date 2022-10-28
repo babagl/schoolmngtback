@@ -3,7 +3,7 @@ package com.example.schoolmngtback.bean;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
+
 @Entity
 @Table(name = "classroom")
 @Data
