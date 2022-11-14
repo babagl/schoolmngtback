@@ -1,23 +1,20 @@
-package com.spring.schoolmngtbackend.controller;
+package com.example.schoolmngtback.controller;
 
-import com.spring.schoolmngtbackend.bean.ClassRoom;
-import com.spring.schoolmngtbackend.dto.ClassRoomDto;
-import com.spring.schoolmngtbackend.implementation.ClassRoomImpl;
+import com.example.schoolmngtback.bean.ClassRoom;
+import com.example.schoolmngtback.implementation.ClassRoomImpl;
+
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Classroom")
+@RequestMapping("/classroom")
 @CrossOrigin("*")
+@AllArgsConstructor
 public class ClassRoomController {
     private ClassRoomImpl service;
-
-
-    public ClassRoomController(ClassRoomImpl service) {
-        this.service=service;
-    }
 
     @GetMapping("/{id}")
     public Optional<ClassRoom> getById(@PathVariable long id) {
@@ -30,19 +27,20 @@ public class ClassRoomController {
     }
 
     @PostMapping
-    public ClassRoom create(@RequestBody ClassRoomDto dto) {
-        System.out.println(dto.getClassName());
-        return service.create(dto);
+    public ClassRoom create(@RequestBody ClassRoom classRoom) {
+
+        return service.create(classRoom);
     }
 
-    @PutMapping
-    public ClassRoom update(@RequestBody ClassRoomDto dto) {
-        System.out.println(dto.getClassName()+"recuperee");
-        return service.update(dto);
+    @PutMapping("/{id}")
+    public ClassRoom update(@RequestBody ClassRoom classRoom, @PathVariable long id) {
+        return service.update(classRoom,id);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable long id) {
         service.delete(id);
     }
+
+
 }

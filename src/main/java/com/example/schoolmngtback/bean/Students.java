@@ -1,10 +1,11 @@
-package com.spring.schoolmngtbackend.bean;
+package com.example.schoolmngtback.bean;
 
 import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name ="students")
@@ -12,26 +13,29 @@ import java.time.LocalDateTime;
 public class Students {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "idStudent")
+
     private Long idStudent;
-    @Column(name = "fullname")
+
     private String fullName;
-    @Column(name = "username",unique = true)
+    @Column(unique = true)
     private String username;
-    @Column(name = "password")
+
     private String password;
-    @Column(name = "email")
-    private String Email;
-    @Column(name = "birthday")
-    private LocalDate birthDay;
-    @Column(name = "address")
+
+    private String email;
+
+    private LocalDate birthday;
+
     private String address;
-    @Enumerated(EnumType.STRING)
-    private Roles roles;
-    @Column(name = "registrationDate")
-    private LocalDateTime DateOfRegister;
-    @OneToOne
-    private TimeTable timeTable;
+
+    private LocalDateTime registrationDate;
+    /*@OneToOne
+    private TimeTable timeTable;*/
+    @OneToMany
+    private Set<Role> roles;
+
+    @ManyToOne
+    private ClassRoom classroom;
 
 
     public Students() {

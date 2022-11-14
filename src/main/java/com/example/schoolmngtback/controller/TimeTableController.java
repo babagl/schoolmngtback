@@ -1,23 +1,23 @@
-package com.spring.schoolmngtbackend.controller;
+package com.example.schoolmngtback.controller;
 
-import com.spring.schoolmngtbackend.bean.TimeTable;
-import com.spring.schoolmngtbackend.dto.TimeTableDto;
-import com.spring.schoolmngtbackend.implementation.TimeTableImpl;
+import com.example.schoolmngtback.bean.TimeTable;
+import com.example.schoolmngtback.implementation.TimeTableImpl;
+
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/TimeTable")
+@RequestMapping("/timetable")
 @CrossOrigin("*")
+@AllArgsConstructor
 public class TimeTableController {
 
     private TimeTableImpl timeTableService;
 
-    public TimeTableController(TimeTableImpl timeTableService) {
-        this.timeTableService = timeTableService;
-    }
 
     @GetMapping("/{id}")
     public Optional<TimeTable> getById(@PathVariable long id) {
@@ -30,14 +30,15 @@ public class TimeTableController {
     }
 
    @PostMapping
-    public TimeTable create(@RequestBody TimeTableDto dto) {
-
-        return timeTableService.create(dto);
+    public TimeTable create(@RequestBody TimeTable timeTable) {
+        timeTable.setStartTime(LocalTime.now());
+        timeTable.setEndTime(timeTable.getStartTime().plusHours(2));
+        return timeTableService.create(timeTable);
     }
 
-    @PutMapping
-    public TimeTable update(@RequestBody TimeTableDto dto) {
-        return timeTableService.update(dto);
+    @PutMapping("/{id}")
+    public TimeTable update(@RequestBody TimeTable timeTable, @PathVariable long id) {
+        return timeTableService.update(timeTable, id);
     }
 
     @DeleteMapping("/{id}")

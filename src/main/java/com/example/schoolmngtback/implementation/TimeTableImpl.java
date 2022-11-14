@@ -1,28 +1,23 @@
-package com.spring.schoolmngtbackend.implementation;
+package com.example.schoolmngtback.implementation;
 
-import com.spring.schoolmngtbackend.bean.TimeTable;
-import com.spring.schoolmngtbackend.dto.TimeTableDto;
-import com.spring.schoolmngtbackend.mapper.TimeTableMapper;
-import com.spring.schoolmngtbackend.repo.TimeTableRepo;
-import com.spring.schoolmngtbackend.service.AllServices;
+
+import com.example.schoolmngtback.bean.TimeTable;
+import com.example.schoolmngtback.repo.TimeTableRepo;
+import com.example.schoolmngtback.service.AllServices;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 @Transactional
-public class TimeTableImpl implements AllServices<TimeTable, TimeTableDto> {
+@AllArgsConstructor
+public class TimeTableImpl implements AllServices<TimeTable> {
 
     private TimeTableRepo timeTableRepo;
-    private TimeTableMapper timeTableMapper;
-
-    public TimeTableImpl(TimeTableRepo timeTableRepo, TimeTableMapper timeTableMapper) {
-        this.timeTableRepo = timeTableRepo;
-        this.timeTableMapper = timeTableMapper;
-    }
-
 
     @Override
     public Optional<TimeTable> getById(long id) {
@@ -35,16 +30,13 @@ public class TimeTableImpl implements AllServices<TimeTable, TimeTableDto> {
     }
 
     @Override
-    public TimeTable create(TimeTableDto dto) {
-        TimeTable timeTable = timeTableMapper.toEntity(dto);
-        return timeTableRepo.save(timeTable);
+    public TimeTable create(TimeTable entity) {
+        return timeTableRepo.save(entity);
     }
 
     @Override
-    public TimeTable update(TimeTableDto dto) {
-        TimeTable timeTable = timeTableMapper.toEntity(dto);
-        timeTable.setIdTimeTable(dto.getIdTimeTable());
-        return timeTableRepo.save(timeTable);
+    public TimeTable update(TimeTable entity , long id) {
+        return timeTableRepo.save(entity);
     }
 
     @Override
@@ -52,3 +44,6 @@ public class TimeTableImpl implements AllServices<TimeTable, TimeTableDto> {
         timeTableRepo.deleteById(id);
     }
 }
+
+
+

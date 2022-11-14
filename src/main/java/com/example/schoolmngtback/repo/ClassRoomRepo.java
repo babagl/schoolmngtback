@@ -1,6 +1,7 @@
-package com.spring.schoolmngtbackend.repo;
+package com.example.schoolmngtback.repo;
 
-import com.spring.schoolmngtbackend.bean.ClassRoom;
+
+import com.example.schoolmngtback.bean.ClassRoom;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

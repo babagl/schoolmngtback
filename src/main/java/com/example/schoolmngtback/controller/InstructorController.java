@@ -1,23 +1,23 @@
-package com.spring.schoolmngtbackend.controller;
+package com.example.schoolmngtback.controller;
 
-import com.spring.schoolmngtbackend.bean.Instructor;
-import com.spring.schoolmngtbackend.dto.InstructorDto;
-import com.spring.schoolmngtbackend.implementation.InstructorImp;
+
+import com.example.schoolmngtback.bean.Instructor;
+
+import com.example.schoolmngtback.implementation.InstructorImp;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Instructor")
+@RequestMapping("/instructor")
 @CrossOrigin("*")
+@AllArgsConstructor
 public class InstructorController {
 
     private InstructorImp instructorImp;
 
-    public InstructorController(InstructorImp instructorImp) {
-        this.instructorImp = instructorImp;
-    }
 
     @GetMapping("/{id}")
     public Optional<Instructor> getById(@PathVariable long id) {
@@ -30,24 +30,28 @@ public class InstructorController {
     }
 
     @PostMapping
-    public Instructor create(@RequestBody InstructorDto dto) {
-        System.out.println(dto.getFullName()+"recuperee");
-        System.out.println(dto.getBirthday()+"recuperee");
-        return instructorImp.create(dto);
+    public Instructor create(@RequestBody Instructor instructor) {
+        System.out.println(instructor.getFullName()+"recuperee");
+        System.out.println(instructor.getBirthday()+"recuperee");
+        //instructor.setRoles(Roles.INSTRUCTOR);
+        return instructorImp.create(instructor);
     }
 
-    @PutMapping
-    public Instructor update(@RequestBody InstructorDto dto) {
+    @PutMapping("/{id}")
+    @CrossOrigin("*")
+    public Instructor update(@RequestBody Instructor instructor, @PathVariable long id) {
 
-        return instructorImp.update(dto);
+        return instructorImp.update(instructor, id);
     }
 
     @DeleteMapping("/{id}")
+    @CrossOrigin("*")
     public void delete(@PathVariable long id) {
         instructorImp.delete(id);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
+    @CrossOrigin("*")
     public Instructor getInstructorByUsername(@PathVariable String username){
         return instructorImp.getInstructorByUsername(username);
     }

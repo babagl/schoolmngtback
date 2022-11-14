@@ -1,6 +1,7 @@
-package com.spring.schoolmngtbackend.repo;
+package com.example.schoolmngtback.repo;
 
-import com.spring.schoolmngtbackend.bean.Students;
+import com.example.schoolmngtback.bean.Students;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface StudentRepo extends JpaRepository<Students, Long> {

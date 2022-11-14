@@ -1,4 +1,4 @@
-package com.spring.schoolmngtbackend.bean;
+package com.example.schoolmngtback.bean;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "administrator")
@@ -15,29 +16,32 @@ public class Administrator {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long idAdministrator;
-    @Column(name = "fullName")
-    private String fullName;
-    @Column(name = "username",unique = true)
-    private String username;
-    @Column(name = "email")
-    private String email;
-    @Column(name = "password")
-    private String password;
-    @Column(name = "birthday")
-    private LocalDate birthday;
-    @Column(name = "address")
-    private String address;
 
-    @Enumerated(EnumType.STRING)
-    private Roles roles;
-    @OneToMany(cascade = CascadeType.DETACH)
+    private String fullName;
+    @Column(unique = true)
+    private String username;
+
+    private String email;
+
+    private String password;
+
+    private LocalDate birthday;
+
+    private String address;
+    private boolean active;
+
+    @OneToMany
+    private Set<Role> roles;
+
+
+    /*@OneToMany(cascade = CascadeType.DETACH)
     List<Instructor> instructors;
     @OneToMany(cascade = CascadeType.DETACH)
     List<TimeTable> timeTables;
     @OneToMany(cascade = CascadeType.DETACH)
     List<Students> students;
     @OneToMany(cascade = CascadeType.DETACH)
-    List<Staff> staff;
+    List<Staff> staff;*/
 
     public Administrator() {
     }

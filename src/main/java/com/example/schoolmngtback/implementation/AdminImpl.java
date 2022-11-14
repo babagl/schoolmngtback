@@ -1,64 +1,76 @@
-package com.spring.schoolmngtbackend.implementation;
+package com.example.schoolmngtback.implementation;
 
-import com.spring.schoolmngtbackend.bean.Administrator;
-import com.spring.schoolmngtbackend.dto.AdministratorDto;
-import com.spring.schoolmngtbackend.mapper.AdministratorMapper;
-import com.spring.schoolmngtbackend.repo.AdministratorRepo;
-import com.spring.schoolmngtbackend.service.AdministratorService;
+import com.example.schoolmngtback.bean.Administrator;
+import com.example.schoolmngtback.bean.User;
+import com.example.schoolmngtback.repo.AdministratorRepo;
+import com.example.schoolmngtback.repo.UserRepository;
+import com.example.schoolmngtback.service.AllServices;
+
+import lombok.AllArgsConstructor;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
+import static java.time.LocalDate.*;
+
 @Service
 @Transactional
-
-public class AdminImpl implements AdministratorService {
-    private final AdministratorRepo repo;
-    private final AdministratorMapper mapper;
+@AllArgsConstructor
+public class AdminImpl implements AllServices<Administrator> {
+    private AdministratorRepo administratorRepo;
     private PasswordEncoder passwordEncoder;
 
-    public AdminImpl(AdministratorRepo repo, AdministratorMapper mapper, PasswordEncoder passwordEncoder) {
-        this.repo = repo;
-        this.mapper = mapper;
-        this.passwordEncoder = passwordEncoder;
+    private UserRepository userRepository;
+
+
+
+    public User create(User entity) {
+        String pwd = entity.getPassword();
+        entity.setPassword(passwordEncoder.encode(pwd));
+        return userRepository.save(entity);
     }
 
     @Override
     public Optional<Administrator> getById(long id) {
-        return repo.findById(id);
+        return administratorRepo.findById(id);
     }
 
     @Override
     public List<Administrator> getAll() {
-        return repo.findAll();
+        return administratorRepo.findAll();
     }
 
     @Override
-    public Administrator create(AdministratorDto dto) {
-        String pwd = dto.getPassword();
-        dto.setPassword(passwordEncoder.encode(pwd));
-        Administrator administrator = mapper.toEntity(dto);
-        return repo.save(administrator);
+    public Administrator create(Administrator entity) {
+        String pwd = entity.getPassword();
+        entity.setPassword(passwordEncoder.encode(pwd));
+        return administratorRepo.save(entity);
     }
 
     @Override
-    public Administrator update(AdministratorDto dto) {
-        String pwd = dto.getPassword();
-        dto.setPassword(passwordEncoder.encode(pwd));
-        Administrator administrator = mapper.toEntity(dto);
-        administrator.setIdAdministrator(dto.getIdAdministrator());
-        return repo.save(administrator);
+    public Administrator update(Administrator entity, long id) {
+        entity.setIdAdministrator(id);
+        return administratorRepo.save(entity);
     }
 
     @Override
     public void delete(long id) {
-        repo.deleteById(id);
+        administratorRepo.deleteById(id);
     }
 
-    public Administrator getAdminByUsername(String username){
-       return repo.findByUsername(username);
+    public Optional<Administrator> getAdminByUsername(String username){
+        return administratorRepo.findByUsername(username);
+    }
+
+    public List<Administrator> searchAdmin(String keyword) {
+        List<Administrator> administrators= administratorRepo.searchAdministrator(keyword);
+        return administrators;
     }
 }

@@ -1,22 +1,20 @@
-package com.spring.schoolmngtbackend.controller;
+package com.example.schoolmngtback.controller;
 
-import com.spring.schoolmngtbackend.bean.Staff;
-import com.spring.schoolmngtbackend.dto.StaffDto;
-import com.spring.schoolmngtbackend.implementation.StaffImpl;
+
+import com.example.schoolmngtback.bean.Staff;
+import com.example.schoolmngtback.implementation.StaffImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/Staff")
+@RequestMapping("/staff")
 @CrossOrigin("*")
+@AllArgsConstructor
 public class StaffController {
     private StaffImpl staffService;
-
-    public StaffController(StaffImpl staffService) {
-        this.staffService = staffService;
-    }
 
     @GetMapping("/{id}")
     public Optional<Staff> getById(@PathVariable long id) {
@@ -29,21 +27,22 @@ public class StaffController {
     }
 
     @PostMapping
-    public Staff create(@RequestBody StaffDto dto) {
-        return staffService.create(dto);
+    public Staff create(@RequestBody Staff staff) {
+        //staff.setRoles(Roles.STAFF);
+        return staffService.create(staff);
     }
 
-    @PutMapping
-    public Staff update(@RequestBody StaffDto dto) {
-        return staffService.update(dto);
+    @PutMapping("/{id}")
+    public Staff update(@RequestBody Staff staff,@PathVariable long id) {
+        return staffService.update(staff, id);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void delete(long id) {
         staffService.delete(id);
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public Staff getStaffByUsername(@PathVariable String username){
         return staffService.getStaffByUsername(username);
     }

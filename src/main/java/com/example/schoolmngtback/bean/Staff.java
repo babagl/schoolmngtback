@@ -1,12 +1,12 @@
-package com.spring.schoolmngtbackend.bean;
+package com.example.schoolmngtback.bean;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Table(name = "staff")
@@ -15,22 +15,22 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Staff {
     @Id
-    @Column(name = "idStaff")
+
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long idStaff;
-    @Column(name = "fullName")
-    private String fullName;
-    @Column(name = "username",unique = true)
-    private String username;
-    @Column(name = "email")
-    private String email;
-    @Column(name = "password")
-    private String password;
-    @Column(name = "birthday")
-    private LocalDate birthday;
-    @Column(name = "address")
-    private String address;
-    @Enumerated(EnumType.STRING)
-    private Roles roles;
 
+    private String fullName;
+    @Column(unique = true)
+    private String username;
+
+    private String email;
+
+    private String password;
+
+    private LocalDate birthday;
+
+    private String address;
+
+    @OneToMany
+    private Set<Role> roles;
 }

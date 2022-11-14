@@ -1,10 +1,10 @@
-package com.spring.schoolmngtbackend.implementation;
+package com.example.schoolmngtback.implementation;
 
-import com.spring.schoolmngtbackend.bean.Staff;
-import com.spring.schoolmngtbackend.dto.StaffDto;
-import com.spring.schoolmngtbackend.mapper.StaffMapper;
-import com.spring.schoolmngtbackend.repo.StaffRepo;
-import com.spring.schoolmngtbackend.service.AllServices;
+import com.example.schoolmngtback.bean.Staff;
+import com.example.schoolmngtback.repo.StaffRepo;
+import com.example.schoolmngtback.service.AllServices;
+
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,14 +13,9 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class StaffImpl implements AllServices<Staff, StaffDto> {
+@AllArgsConstructor
+public class StaffImpl implements AllServices<Staff> {
     private StaffRepo staffRepo;
-    private StaffMapper staffMapper;
-
-    public StaffImpl(StaffRepo staffRepo, StaffMapper staffMapper) {
-        this.staffRepo = staffRepo;
-        this.staffMapper = staffMapper;
-    }
 
     @Override
     public Optional<Staff> getById(long id) {
@@ -33,16 +28,13 @@ public class StaffImpl implements AllServices<Staff, StaffDto> {
     }
 
     @Override
-    public Staff create(StaffDto dto) {
-        Staff staff = staffMapper.toEntity(dto);
-        return staffRepo.save(staff);
+    public Staff create(Staff entity) {
+        return staffRepo.save(entity);
     }
 
     @Override
-    public Staff update(StaffDto dto) {
-        Staff staff = staffMapper.toEntity(dto);
-        staff.setIdStaff(dto.getIdStaff());
-        return staffRepo.save(staff);
+    public Staff update(Staff entity, long id) {
+        return staffRepo.save(entity);
     }
 
     @Override
@@ -50,7 +42,7 @@ public class StaffImpl implements AllServices<Staff, StaffDto> {
         staffRepo.deleteById(id);
     }
 
-    public Staff getStaffByUsername(String username){
+    public Staff getStaffByUsername(String username) {
         return staffRepo.findByUsername(username);
     }
 }

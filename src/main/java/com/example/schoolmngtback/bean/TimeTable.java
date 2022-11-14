@@ -1,4 +1,4 @@
-package com.spring.schoolmngtbackend.bean;
+package com.example.schoolmngtback.bean;
 
 import lombok.Data;
 
@@ -11,17 +11,17 @@ import java.util.List;
 @Data
 public class TimeTable {
     @Id
-    @Column(name = "idTimeTable")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long idTimeTable;
-    @Column(name = "matiere",unique = true)
+    @Column(unique = true)
     private String matiere;
-    @Column(name = "startTime")
-    private LocalTime StartTime;
-    @Column(name = "endTime")
-    private LocalTime EndTime;
-    @ManyToMany
-    List<Instructor>instructors;
+
+    private LocalTime startTime;
+
+    private LocalTime endTime;
+
+    @ManyToOne
+    private Instructor instructor;
 
 
 }

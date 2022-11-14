@@ -1,4 +1,4 @@
-package com.spring.schoolmngtbackend.bean;
+package com.example.schoolmngtback.bean;
 
 public class Evatuation {
 }

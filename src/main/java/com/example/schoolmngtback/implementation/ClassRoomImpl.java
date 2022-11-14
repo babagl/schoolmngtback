@@ -1,10 +1,10 @@
-package com.spring.schoolmngtbackend.implementation;
+package com.example.schoolmngtback.implementation;
 
-import com.spring.schoolmngtbackend.bean.ClassRoom;
-import com.spring.schoolmngtbackend.dto.ClassRoomDto;
-import com.spring.schoolmngtbackend.mapper.ClassRoomMapper;
-import com.spring.schoolmngtbackend.repo.ClassRoomRepo;
-import com.spring.schoolmngtbackend.service.AllServices;
+import com.example.schoolmngtback.bean.ClassRoom;
+
+import com.example.schoolmngtback.repo.ClassRoomRepo;
+import com.example.schoolmngtback.service.AllServices;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,14 +13,9 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class ClassRoomImpl implements AllServices<ClassRoom, ClassRoomDto> {
+@AllArgsConstructor
+public class ClassRoomImpl implements AllServices<ClassRoom> {
     private ClassRoomRepo classRoomRepo;
-    private ClassRoomMapper classRoomMapper;
-
-    public ClassRoomImpl(ClassRoomRepo classRoomRepo, ClassRoomMapper classRoomMapper) {
-        this.classRoomRepo = classRoomRepo;
-        this.classRoomMapper = classRoomMapper;
-    }
 
     @Override
     public Optional<ClassRoom> getById(long id) {
@@ -33,19 +28,13 @@ public class ClassRoomImpl implements AllServices<ClassRoom, ClassRoomDto> {
     }
 
     @Override
-    public ClassRoom create(ClassRoomDto dto) {
-        System.out.println(dto.getClassName()+"dtp added");
-        ClassRoom classRoom = classRoomMapper.toEntity(dto);
-        System.out.println(classRoom.getClassName()+"...added");
-        return classRoomRepo.save(classRoom);
+    public ClassRoom create(ClassRoom entity) {
+        return classRoomRepo.save(entity);
     }
 
     @Override
-    public ClassRoom update(ClassRoomDto dto) {
-        ClassRoom classRoom = classRoomMapper.toEntity(dto);
-        classRoom.setMatriculeClassroom(dto.getMatriculeClassroom());
-        System.out.println(classRoom.getClassName()+"changed");
-        return classRoomRepo.save(classRoom);
+    public ClassRoom update(ClassRoom entity, long id) {
+        return classRoomRepo.save(entity);
     }
 
     @Override
